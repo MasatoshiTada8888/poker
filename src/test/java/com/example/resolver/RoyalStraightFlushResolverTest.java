@@ -2,10 +2,12 @@ package com.example.resolver;
 
 import com.example.Card;
 import com.example.Hand;
+import com.example.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static com.example.Result.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RoyalStraightFlushResolverTest {
@@ -97,6 +99,52 @@ public class RoyalStraightFlushResolverTest {
             hand.draw(Card.CLUB_Q);
             hand.draw(Card.CLUB_K);
             assertFalse(resolver.canResolve(hand));
+        }
+    }
+
+    @Nested
+    @DisplayName("compare()")
+    class CompareTest {
+        @Test
+        @DisplayName("スペードとハートではスペードのロイヤルストレートフラッシュの方が強い")
+        void spade_heart() {
+            Hand spades = new Hand();
+            spades.draw(Card.SPADE_10);
+            spades.draw(Card.SPADE_J);
+            spades.draw(Card.SPADE_Q);
+            spades.draw(Card.SPADE_K);
+            spades.draw(Card.SPADE_A);
+
+            Hand hearts = new Hand();
+            hearts.draw(Card.HEART_10);
+            hearts.draw(Card.HEART_J);
+            hearts.draw(Card.HEART_Q);
+            hearts.draw(Card.HEART_K);
+            hearts.draw(Card.HEART_A);
+
+            Result actual = resolver.compare(spades, hearts);
+            assertEquals(WIN_1, actual);
+        }
+
+        @Test
+        @DisplayName("クラブとダイヤではダイヤのロイヤルストレートフラッシュの方が強い")
+        void club_diamond() {
+            Hand clubs = new Hand();
+            clubs.draw(Card.CLUB_10);
+            clubs.draw(Card.CLUB_J);
+            clubs.draw(Card.CLUB_Q);
+            clubs.draw(Card.CLUB_K);
+            clubs.draw(Card.CLUB_A);
+
+            Hand diamonds = new Hand();
+            diamonds.draw(Card.DIAMOND_10);
+            diamonds.draw(Card.DIAMOND_J);
+            diamonds.draw(Card.DIAMOND_Q);
+            diamonds.draw(Card.DIAMOND_K);
+            diamonds.draw(Card.DIAMOND_A);
+
+            Result actual = resolver.compare(clubs, diamonds);
+            assertEquals(WIN_2, actual);
         }
     }
 }

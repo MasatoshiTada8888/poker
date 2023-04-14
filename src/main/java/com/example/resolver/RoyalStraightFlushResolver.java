@@ -2,9 +2,14 @@ package com.example.resolver;
 
 import com.example.Card;
 import com.example.Hand;
+import com.example.Result;
+import com.example.Suit;
 
 import java.util.List;
 
+/**
+ * ロイヤルストレートフラッシュを解決するクラスです。
+ */
 public class RoyalStraightFlushResolver implements PokerHandResolver {
 
     private static final List<List<Card>> TARGET_CARD_LISTS = List.of(
@@ -14,6 +19,11 @@ public class RoyalStraightFlushResolver implements PokerHandResolver {
             List.of(Card.CLUB_10, Card.CLUB_J, Card.CLUB_Q, Card.CLUB_K, Card.CLUB_A)
     );
 
+    /**
+     * 手札がロイヤルストレートフラッシュであればtrueを返します。
+     * @param hand 手札
+     * @return 手札がロイヤルストレートフラッシュであればtrue
+     */
     @Override
     public boolean canResolve(Hand hand) {
         List<Card> cardListInHand = hand.getCardList();
@@ -34,8 +44,23 @@ public class RoyalStraightFlushResolver implements PokerHandResolver {
         return true;
     }
 
+    /**
+     * ロイヤルストレートフラッシュ同士の勝敗を判定します。
+     * @param hand1 1つ目の手札（ロイヤルストレートフラッシュ）
+     * @param hand2 2つ目の手札（ロイヤルストレートフラッシュ）
+     * @return 1つ目が勝ちであればWIN_1、2つ目が勝ちであればWIN_2
+     */
     @Override
-    public PokerHandCompareResult compare(Hand hand1, Hand hand2) {
-        return null;
+    public Result compare(Hand hand1, Hand hand2) {
+        Card card1 = hand1.getCardList().get(0);
+        Suit suit1 = card1.getSuit();
+        Card card2 = hand2.getCardList().get(0);
+        Suit suit2 = card2.getSuit();
+        // マークでのみの判定となる
+        if (suit1.isGreaterThan(suit2)) {
+            return Result.WIN_1;
+        } else {
+            return Result.WIN_2;
+        }
     }
 }

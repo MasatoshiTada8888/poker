@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 /**
  * 手札を表すコレクションクラスです。
- *
  * （イミュータブルでないなど、改善すべき点は多くあると思います）
  */
 public class Hand {

@@ -41,4 +41,13 @@ public enum Suit {
     public String getValue() {
         return value;
     }
+
+    /**
+     * 自身と別のSuitを比較して、自身の方が強ければtrueを返します。
+     * @param otherSuit 別のSuit
+     * @return 自身の方が強ければtrue
+     */
+    public boolean isGreaterThan(Suit otherSuit) {
+        return this.grade > otherSuit.grade;
+    }
 }

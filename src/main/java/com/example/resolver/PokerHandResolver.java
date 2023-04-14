@@ -1,10 +1,10 @@
 package com.example.resolver;
 
 import com.example.Hand;
+import com.example.Result;
 
 /**
  * 手札を各役に解決できるか判定するインタフェースです。
- *
  * @see com.example.PokerHand
  */
 public interface PokerHandResolver {
@@ -22,5 +22,5 @@ public interface PokerHandResolver {
      * @param hand2 2つ目の手札
      * @return 1つ目の手札が勝つ場合はWIN_1、2つ目の手札が勝つ場合はWIN_2
      */
-    PokerHandCompareResult compare(Hand hand1, Hand hand2);
+    Result compare(Hand hand1, Hand hand2);
 }
